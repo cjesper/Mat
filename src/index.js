@@ -1,20 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button} from 'reactstrap'
 import './index.css';
+import Greeting from './greeting.js'
+import Menu from './menu.js'
+import getDate from './frontend.js'
 
-class Menu extends React.Component {
+/* Main page*/
+class Index extends React.Component {
   render() {
     return (
-      <Button
-        bsStyle="primary"> 
-        { "Hello!"/* TODO */}
-      </Button>
+        <div>
+            <Greeting dateProp = {getDate()}/>
+            <Menu restaurantNameProp = "Kårrestaurangen"/>
+        </div>
     );
   }
 }
 
 ReactDOM.render(
-  <Menu/>,
+  <Index/>,
   document.getElementById('root')
 );
