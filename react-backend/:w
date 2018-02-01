@@ -16,9 +16,13 @@ class Menu extends React.Component {
   render() {
     return (
         <div className="menu">
-            <MenuItem meatProp = {this.state.menu.meat} fishProp = {this.state.menu.fish} vegProp = {this.state.menu.veg} soupProp= {this.state.menu.soup}
-                salladProp = {this.state.menu.sallad} expressProp = {this.state.menu.express}/>
+            <h1>Hey</h1>
+            <h2>{this.state.menu.veg}</h2>
         </div>
+        //<h2>{this.props.restaurantNameProp}</h2>
+        <MenuItem meatProp = "Aff" fishProp = "fishy" vegProp = "vegz" soupProp="soupz"
+                sallad1Prop = "salladOne" sallad2Prop = "salladTwo" sallad3Prop = "salladThree"/>
+    //</div>
     );
   }
 }

@@ -8,12 +8,6 @@ import getDate from './frontend.js'
 /* Main page*/
 class Index extends React.Component {
 
-  componentDidMount(){
-    fetch('/menu')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-  }
-
   render() {
     return (
         <div>
