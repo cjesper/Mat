@@ -22,24 +22,48 @@ router.get('/', function(req, res, next) {
                 function (i, elem) {
                     menus[i] = $(this).children().text();
                 });
-        /* Extract todays meals*/
-        var veg = menus[1].split(/[0-9]/)[0];
-        var fish= menus[2].split(/[0-9]/)[0];
-        var meat = menus[3].split(/[0-9]/)[0];
-        var sallad = menus[4].split(/[0-9]/)[0];
-        var soup = menus[5].split(/[0-9]/)[0];
-        var express= menus[6].split(/[0-9]/)[0];
-        console.log(veg);
+        /* Extract todays meals */
+        /* Really ugly and will have to be redone */
+        var firstVeg = menus[1].match(/\d/);
+        var veg = menus[1].slice(0, menus[1].indexOf(firstVeg));
+        var vegCO = menus[1].slice(menus[1].indexOf(firstVeg)+2, menus[1].length).split(' ')[0];
 
+        var firstFish= menus[2].match(/\d/);
+        var fish = menus[2].slice(0, menus[2].indexOf(firstFish));
+        var fishCO = menus[2].slice(menus[2].indexOf(firstFish)+2, menus[2].length).split(' ')[0];
+        
+        var firstMeat = menus[3].match(/\d/);
+        var meat = menus[3].slice(0, menus[3].indexOf(firstMeat));
+        var meatCO = menus[3].slice(menus[3].indexOf(firstMeat)+2, menus[3].length).split(' ')[0];
+
+        var firstSallad= menus[4].match(/\d/);
+        var sallad = menus[4].slice(0, menus[4].indexOf(firstSallad));
+        var salladCO = menus[4].slice(menus[4].indexOf(firstSallad)+2, menus[4].length).split(' ')[0];
+        
+        var firstSoup= menus[5].match(/\d/);
+        var soup = menus[5].slice(0, menus[5].indexOf(firstSoup));
+        var soupCO = menus[5].slice(menus[5].indexOf(firstSoup)+2, menus[5].length).split(' ')[0];
+        
+        var firstExpress= menus[6].match(/\d/);
+        var express = menus[6].slice(0, menus[6].indexOf(firstExpress));
+        var expressCO = menus[6].slice(menus[6].indexOf(firstExpress)+2, menus[6].length).split(' ')[0];
+       
         //New json 
         res.json({
           veg: veg,
+          vegCO: vegCO,
           fish: fish,
+          fishCO: fishCO,
           meat: meat,
+          meatCO: meatCO,
           sallad: sallad,
+          salladCO: salladCO,
           soup : soup,
-          express: express
+          soupCO: soupCO,
+          express: express,
+          expressCO: expressCO
         });
+
         }
     })
 });
