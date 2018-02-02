@@ -50,17 +50,17 @@ router.get('/', function(req, res, next) {
        
         //New json 
         res.json({
-          veg: veg,
+          veg: veg.split(':')[1],
           vegCO: vegCO,
-          fish: fish,
+          fish: fish.split(':')[1],
           fishCO: fishCO,
-          meat: meat,
+          meat: meat.split(':')[1],
           meatCO: meatCO,
-          sallad: sallad,
+          sallad: sallad.split(':')[1],
           salladCO: salladCO,
-          soup : soup,
+          soup : soup.split(':')[1],
           soupCO: soupCO,
-          express: express,
+          express: express.split(':')[1],
           expressCO: expressCO
         });
 

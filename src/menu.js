@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import MenuItem from './menuItem.js'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 class Menu extends React.Component {
   state = {menu: []}
@@ -19,18 +21,16 @@ class Menu extends React.Component {
       console.log("rendering");
       console.log(getColor(this.state.menu.meatCO));
     return (
-        //<div className="menu">
-            //<MenuItem meatProp = {this.state.menu.meat} fishProp = {this.state.menu.fish} vegProp = {this.state.menu.veg} soupProp= {this.state.menu.soup}
-                //salladProp = {this.state.menu.sallad} expressProp = {this.state.menu.express}/>
-        //</div>
+        <MuiThemeProvider>
         <div className="menu">
-          <p style={{color: getColor(this.state.menu.meatCO)}}> {this.state.menu.meat} </p>
-          <p style={{color: getColor(this.state.menu.fishCO)}}>{this.state.menu.fish}</p>
-          <p style={{color: getColor(this.state.menu.vegCO)}}>{this.state.menu.veg}</p>
-          <p style={{color: getColor(this.state.menu.soupCO)}}>{this.state.menu.soup}</p>
-          <p style={{color: getColor(this.state.menu.salladCO)}}>{this.state.menu.sallad}</p>
-          <p style={{color: getColor(this.state.menu.expressCO)}}>{this.state.menu.express}</p>
+          <h2> Kårrestaurangen </h2>
+          <p>CLASSIC KÖTT: <span style={{color: getColor(this.state.menu.meatCO)}}> {this.state.menu.meat} </span> </p>
+          <p>CLASSIC FISK: <span style={{color: getColor(this.state.menu.fishCO)}}> {this.state.menu.fish} </span> </p>
+          <p>CLASSIC VEG: <span style={{color: getColor(this.state.menu.vegCO)}}> {this.state.menu.veg} </span> </p>
+          <p>VECKANS SOPPA: <span style={{color: getColor(this.state.menu.soupCO)}}> {this.state.menu.soup} </span> </p>
+          <p>EXPRESS: <span style={{color: getColor(this.state.menu.expressCO)}}> {this.state.menu.express} </span> </p>
         </div>
+        </MuiThemeProvider>
     );
   }
 }
@@ -38,13 +38,13 @@ class Menu extends React.Component {
 
 function getColor(co) {
   console.log(co);
-  if (co < 0.3) {
+  if (co <= 0.3) {
     return "green";
-  } else if (co > 0.3 && co < 0.6) {
-    return "yellow";
-  } else if (co > 0.6 && co < 1.0){
+  } else if (co > 0.3 && co <= 0.6) {
+    return "#ffcc00";
+  } else if (co > 0.6 && co <= 1.0){
     return "orange";
-  } else if (co > 1000) {
+  } else if (co > 1) {
     return "red";
   } else {
     return "black";
