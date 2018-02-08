@@ -6,66 +6,64 @@ const cheerio = require('cheerio');
 /* GET menu listing. */
 router.get('/', function(req, res, next) {
  
-    const url = "https://chalmerskonferens.se/lunchmenyer-johanneberg/" ;
+    //const url = "https://chalmerskonferens.se/lunchmenyer-johanneberg/" ;
+    const url = "http://carboncloudrestaurantapi.azurewebsites.net/api/menuscreen/getdataday?restaurantid=5" 
     var returnz = "test";
     request(url, { json: true}, (err, result, body) => {
     if(err) {
         console.log("Error: " + err); 
     } else {
-        var menus = [];
-        var $ = cheerio.load(body);
-        /* Scrape the kåris menu */
-        var unionMenu = $('div[data-index="1"]').text();
-        var childs = $('div[data-index="1"]').find('tbody').length;
-        var next = $('div[data-index="1"]').children('div').children('div')
-            .children('div').children('table').children().each(
-                function (i, elem) {
-                    menus[i] = $(this).children().text();
-                });
-        /* Extract todays meals */
-        /* Really ugly and will have to be redone */
-        var firstVeg = menus[1].match(/\d/);
-        var veg = menus[1].slice(0, menus[1].indexOf(firstVeg));
-        var vegCO = menus[1].slice(menus[1].indexOf(firstVeg)+2, menus[1].length).split(' ')[0];
-
-        var firstFish= menus[2].match(/\d/);
-        var fish = menus[2].slice(0, menus[2].indexOf(firstFish));
-        var fishCO = menus[2].slice(menus[2].indexOf(firstFish)+2, menus[2].length).split(' ')[0];
+        var veg = body['recipeCategories'][0]['recipes'][0]['displayNames'][0]['displayName'];
+        var vegCO = body['recipeCategories'][0]['recipes'][0]['cO2e'];
         
-        var firstMeat = menus[3].match(/\d/);
-        var meat = menus[3].slice(0, menus[3].indexOf(firstMeat));
-        var meatCO = menus[3].slice(menus[3].indexOf(firstMeat)+2, menus[3].length).split(' ')[0];
-
-        var firstSallad= menus[4].match(/\d/);
-        var sallad = menus[4].slice(0, menus[4].indexOf(firstSallad));
-        var salladCO = menus[4].slice(menus[4].indexOf(firstSallad)+2, menus[4].length).split(' ')[0];
+        var fish= body['recipeCategories'][1]['recipes'][0]['displayNames'][0]['displayName'];
+        var fishCO = body['recipeCategories'][1]['recipes'][0]['cO2e'];
         
-        var firstSoup= menus[5].match(/\d/);
-        var soup = menus[5].slice(0, menus[5].indexOf(firstSoup));
-        var soupCO = menus[5].slice(menus[5].indexOf(firstSoup)+2, menus[5].length).split(' ')[0];
+        var meat = body['recipeCategories'][2]['recipes'][0]['displayNames'][0]['displayName'];
+        var meatCO = body['recipeCategories'][2]['recipes'][0]['cO2e'];
         
-        var firstExpress= menus[6].match(/\d/);
-        var express = menus[6].slice(0, menus[6].indexOf(firstExpress));
-        var expressCO = menus[6].slice(menus[6].indexOf(firstExpress)+2, menus[6].length).split(' ')[0];
-       
-        //New json 
-        res.json({
-          veg: veg.split(':')[1],
-          vegCO: vegCO,
-          fish: fish.split(':')[1],
-          fishCO: fishCO,
-          meat: meat.split(':')[1],
-          meatCO: meatCO,
-          sallad: sallad.split(':')[1],
-          salladCO: salladCO,
-          soup : soup.split(':')[1],
-          soupCO: soupCO,
-          express: express.split(':')[1],
-          expressCO: expressCO
-        });
-
+        var sallad = body['recipeCategories'][3]['recipes'][0]['displayNames'][0]['displayName'];
+        var salladCO = body['recipeCategories'][3]['recipes'][0]['cO2e'];
+        
+        var soup = body['recipeCategories'][4]['recipes'][0]['displayNames'][0]['displayName'];
+        var soupCO = body['recipeCategories'][4]['recipes'][0]['cO2e'];
+        
+        var express = body['recipeCategories'][5]['recipes'][0]['displayNames'][0]['displayName'];
+        var expressCO = body['recipeCategories'][5]['recipes'][0]['cO2e'];
+        
+        if (veg) {
+              res.json({
+                  veg: veg, 
+                  vegCO: vegCO,
+                  fish: fish, 
+                  fishCO: fishCO,
+                  meat: meat,
+                  meatCO: meatCO,
+                  sallad: sallad,
+                  salladCO: salladCO,
+                  soup : soup,
+                  soupCO: soupCO,
+                  express: express,
+                  expressCO: expressCO
+              });
+        } else {
+              res.json({
+                  veg: "Default veg", 
+                  vegCO: 100,
+                  fish: "Default fish", 
+                  fishCO: 100,
+                  meat: "Default meat", 
+                  meatCO: 100,
+                  sallad: "Default sallad",  
+                  salladCO: 100,
+                  soup : "Default soup", 
+                  soupCO: 100,
+                  express: "Default express", 
+                  expressCO: 100
+              });
         }
-    })
+    }
+});
 });
 
 module.exports = router;
